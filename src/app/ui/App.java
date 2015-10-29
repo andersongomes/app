@@ -1,14 +1,14 @@
-package app.sample;
+package app.ui;
 
 import java.sql.SQLException;
 
 import totalcross.phone.Dial;
 import totalcross.sql.Connection;
 import totalcross.sql.DriverManager;
+import totalcross.sql.ResultSet;
 import totalcross.sql.Statement;
 import totalcross.sys.Convert;
 import totalcross.sys.Settings;
-import totalcross.sys.Vm;
 import totalcross.ui.Button;
 import totalcross.ui.Edit;
 import totalcross.ui.Label;
@@ -28,7 +28,7 @@ public class App extends MainWindow {
 
 	private Button btInsert, btClear, btDial, btTeste;
 
-	private Connection dbcon;
+	private Connection conn;
 
 	public App() {
 
@@ -72,7 +72,9 @@ public class App extends MainWindow {
 		add(usuario = new Edit(), LEFT, AFTER);
 
 		add(new Label("Senha: "), LEFT, AFTER + 50);
-		add(senha = new Edit(), LEFT, AFTER);
+		senha = new Edit();
+		senha.setMode(senha.PASSWORD_ALL);
+		add(senha, LEFT, AFTER);
 
 		Spacer sp = new Spacer(0, 0);
 
@@ -90,24 +92,36 @@ public class App extends MainWindow {
 		btClear.setBackColor(Color.BLUE);
 
 		btTeste.setBackColor(Color.GREEN);
-		/*
-		 * if (Settings.onJavaSE || Settings.platform.equals(Settings.WIN32)){
-		 * add(new Label("Press F11 on date/number to open keypad"), CENTER,
-		 * BOTTOM); }
-		 */
+
 		try {
-
-			dbcon = DriverManager.getConnection("jdbc:sqlite:" + Convert.appendPath(Settings.appPath, "test.db"));
-
-			Statement st = dbcon.createStatement();
+			conn = DriverManager.getConnection("jdbc:sqlite:" + Convert.appendPath(Settings.appPath, "test.db"));
+			Statement st = conn.createStatement();
 
 			st.execute("create table if not exists person (name varchar, born datetime, number varchar)");
 			st.execute(
-					"create table if not exists usuario (id_usuario integer primary key autoincrement, nome varchar, uuario varchar, senha varchar)");
+					"create table if not exists usuario (id_usuario integer primary key autoincrement, nome varchar, usuario varchar, senha varchar)");
 			st.execute(
-					"create table if not exists local (id_local integer primary key autoincrement, codigo int, nome varchar, endereco varchar, numero varchar, ponto_referencia varchar, cidade varchar, estado varchar)");
+					"create table if not exists local (codigo integer primary key autoincrement, nome varchar, endereco varchar, numero varchar, ponto_referencia varchar, cidade varchar, estado varchar)");
 
-			st.close();
+			String query = "select * from usuario limit 1";
+			int x = 0;
+			try {
+				ResultSet rs = st.executeQuery(query);
+				while (rs.next()) {
+					x++;
+					break;
+				}
+				rs.close();
+				if (x == 0) {
+					System.out.println("Não existem registros!");
+					st.execute("insert into usuario (nome, usuario, senha) values ('Administrador', 'admin', '12345')");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				st.close();
+				conn.close();
+			}
 
 		}
 
@@ -118,7 +132,7 @@ public class App extends MainWindow {
 			exit(0);
 
 		}
-
+		
 		Toast.posY = CENTER;
 
 	}
@@ -145,7 +159,6 @@ public class App extends MainWindow {
 					Dial.number(edPhone.getText());
 
 				} else if (e.target == btTeste) {
-					System.out.println("EVENTO!!");
 					login();
 				}
 				break;
@@ -176,12 +189,13 @@ public class App extends MainWindow {
 
 			String phone = edPhone.getText();
 
-			Statement st = dbcon.createStatement();
+			conn = DriverManager.getConnection("jdbc:sqlite:" + Convert.appendPath(Settings.appPath, "test.db"));
+			Statement st = conn.createStatement();
 
 			st.executeUpdate("insert into person values('" + name + "','" + born.getSQLString() + "','" + phone + "')");
 
 			st.close();
-
+			conn.close();
 			clear();
 
 			Toast.show("Data inserted successfully!", 2000);
@@ -196,13 +210,29 @@ public class App extends MainWindow {
 			Toast.show("Por favor, preencha todos os campos!", 2000);
 
 		} else {
-			if (usuario.getText().equals("anderson") && senha.getText().equals("admin")) {
-				TelaInicial ti = new TelaInicial();
-				ti.popup();
-				Vm.sleep(2000); // or do something else
-				ti.unpop();
-			} else {
-				Toast.show("Usuario e senha não conferem! Tente novamente.", 2000);
+			try {
+				conn = DriverManager.getConnection("jdbc:sqlite:" + Convert.appendPath(Settings.appPath, "test.db"));
+				Statement st = conn.createStatement();
+				String query = "select * from usuario where usuario = '" + usuario.getText() + "' and senha = '"
+						+ senha.getText() + "' limit 1";
+				ResultSet rs = st.executeQuery(query);
+				int x = 0;
+				while (rs.next()) {
+					x++;
+					break;
+				}
+				rs.close();
+				if (x == 0) {
+					Toast.show("Usuario e senha não conferem! Tente novamente.", 2000);
+				} else {
+					TelaInicial ti = new TelaInicial();
+					ti.popup();
+				}
+				st.close();
+				conn.close();
+
+			} catch (SQLException eee) {
+				MessageBox.showException(eee, true);
 			}
 		}
 	}
