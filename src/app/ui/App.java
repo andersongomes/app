@@ -100,6 +100,7 @@ public class App extends MainWindow {
 			st.execute("create table if not exists person (name varchar, born datetime, number varchar)");
 			st.execute(
 					"create table if not exists usuario (id_usuario integer primary key autoincrement, nome varchar, usuario varchar, senha varchar)");
+
 			st.execute(
 					"create table if not exists local (codigo integer primary key autoincrement, nome varchar, endereco varchar, numero varchar, ponto_referencia varchar, cidade varchar, estado varchar, latitude varchar, longitude varchar)");
 

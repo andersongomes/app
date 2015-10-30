@@ -1,0 +1,103 @@
+Exception: class totalcross.sql.SQLException
+Message: [-1] unknown error (table local has no column named latitude)
+Stack trace:
+totalcross.db.sqlite.DB.throwex 869
+totalcross.db.sqlite.NativeDB.prepare
+totalcross.db.sqlite.DB.prepare 205
+totalcross.db.sqlite.Stmt.execute 161
+app.ui.AddLocal.onEvent 122
+totalcross.ui.Control._onEvent 1625
+totalcross.ui.Control.postEvent 1202
+totalcross.ui.Control.postPressedEvent 464
+totalcross.ui.Button.onEvent 501
+totalcross.ui.Control._onEvent 1625
+totalcross.ui.Control.postEvent 1202
+totalcross.ui.Window._postEvent 1066
+totalcross.ui.Window._postEvent 582
+totalcross.ui.Window.pumpEvents
+totalcross.ui.Window.popup 1288
+totalcross.ui.Window.popup 1654
+app.ui.ListaLocais.onEvent 111
+totalcross.ui.Control._onEvent 1625
+totalcross.ui.Control.postEvent 1202
+totalcross.ui.Control.postPressedEvent 464
+totalcross.ui.Button.onEvent 501
+totalcross.ui.Control._onEvent 1625
+totalcross.ui.Control.postEvent 1202
+totalcross.ui.Window._postEvent 1066
+totalcross.ui.Window._postEvent 582
+totalcross.ui.Window.pumpEvents
+totalcross.ui.Window.popup 1288
+totalcross.ui.Window.popup 1654
+app.ui.TelaInicial.onEvent 48
+tot
+===============
+Exception: class totalcross.sql.SQLException
+Message: [-1] unknown error (table local has no column named latitude)
+Stack trace:
+totalcross.db.sqlite.DB.throwex 869
+totalcross.db.sqlite.NativeDB.prepare
+totalcross.db.sqlite.DB.prepare 205
+totalcross.db.sqlite.Stmt.execute 161
+app.ui.AddLocal.onEvent 122
+totalcross.ui.Control._onEvent 1625
+totalcross.ui.Control.postEvent 1202
+totalcross.ui.Control.postPressedEvent 464
+totalcross.ui.Button.onEvent 501
+totalcross.ui.Control._onEvent 1625
+totalcross.ui.Control.postEvent 1202
+totalcross.ui.Window._postEvent 1066
+totalcross.ui.Window._postEvent 582
+totalcross.ui.Window.pumpEvents
+totalcross.ui.Window.popup 1288
+totalcross.ui.Window.popup 1654
+app.ui.TelaInicial.onEvent 54
+totalcross.ui.Control._onEvent 1625
+totalcross.ui.Control.postEvent 1202
+totalcross.ui.Control.postPressedEvent 464
+totalcross.ui.Button.onEvent 501
+totalcross.ui.Control._onEvent 1625
+totalcross.ui.Control.postEvent 1202
+totalcross.ui.Window._postEvent 1066
+totalcross.ui.Window._postEvent 582
+totalcross.ui.Window.pumpEvents
+totalcross.ui.Window.popup 1288
+totalcross.ui.Window.popup 1654
+app.ui.App.login 229
+app.ui.App.on
+Exception: class totalcross.sql.SQLException
+Message: [-1] unknown error (table local has no column named latitude)
+Stack trace:
+totalcross.db.sqlite.DB.throwex 869
+totalcross.db.sqlite.NativeDB.prepare
+totalcross.db.sqlite.DB.prepare 205
+totalcross.db.sqlite.Stmt.execute 161
+app.ui.AddLocal.onEvent 122
+totalcross.ui.Control._onEvent 1625
+totalcross.ui.Control.postEvent 1202
+totalcross.ui.Control.postPressedEvent 464
+totalcross.ui.Button.onEvent 501
+totalcross.ui.Control._onEvent 1625
+totalcross.ui.Control.postEvent 1202
+totalcross.ui.Window._postEvent 1066
+totalcross.ui.Window._postEvent 582
+totalcross.ui.Window.pumpEvents
+totalcross.ui.Window.popup 1288
+totalcross.ui.Window.popup 1654
+app.ui.TelaInicial.onEvent 54
+totalcross.ui.Control._onEvent 1625
+totalcross.ui.Control.postEvent 1202
+totalcross.ui.Control.postPressedEvent 464
+totalcross.ui.Button.onEvent 501
+totalcross.ui.Control._onEvent 1625
+totalcross.ui.Control.postEvent 1202
+totalcross.ui.Window._postEvent 1066
+totalcross.ui.Window._postEvent 582
+totalcross.ui.Window.pumpEvents
+totalcross.ui.Window.popup 1288
+totalcross.ui.Window.popup 1654
+app.ui.App.login 229
+app.ui.App.on
+===============
+getLocation "http://maps.googleapis.com/maps/api/geocode/xml?address=agsgsa+sgasag,+saggsa,+saggsa&sensor=false" returned response code: 500
+===============
