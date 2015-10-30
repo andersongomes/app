@@ -1,11 +1,13 @@
 package app.ui;
 
 import app.model.Local;
-import app.utils.ConnectionFactory;
+import totalcross.io.IOException;
+import totalcross.map.GoogleMaps;
 import totalcross.sql.Connection;
 import totalcross.sql.DriverManager;
 import totalcross.sql.Statement;
 import totalcross.sys.Convert;
+import totalcross.sys.InvalidNumberException;
 import totalcross.sys.Settings;
 import totalcross.ui.Button;
 import totalcross.ui.Edit;
@@ -22,6 +24,9 @@ public class AddLocal extends Window {
 	private Edit nome, endereco, numero, pontoReferencia, cidade, estado;
 	private Button salvar, cancelar, btClear;
 	private Connection conn;
+	private GoogleMaps gm;
+	private String latitude, longitude;
+
 	public AddLocal() {
 		super("App Seleção SoftSite", VERTICAL_GRADIENT);
 
@@ -88,19 +93,39 @@ public class AddLocal extends Window {
 						local.setNumero(numero.getText());
 						local.setPontoReferencia(pontoReferencia.getText());
 						
-						conn = DriverManager.getConnection("jdbc:sqlite:" + Convert.appendPath(Settings.appPath, "test.db"));
+						gm = new GoogleMaps();
+						double[] x = null;
+						try {
+							x = GoogleMaps.getLocation(endereco.getText() + " " + numero.getText() + ", " + cidade.getText() + ", " + estado.getText());
+						} catch (IOException | InvalidNumberException eee) {
+							// MessageBox.showException(eee, true);
+							latitude = "0";
+							longitude = "0";
+						}
+
+						if (x == null) {
+							latitude = "0";
+							longitude = "0";
+						} else {
+							latitude = Double.toString(x[0]);
+							longitude = Double.toString(x[1]);
+						}
+						conn = DriverManager
+								.getConnection("jdbc:sqlite:" + Convert.appendPath(Settings.appPath, "test.db"));
 
 						Statement st = conn.createStatement();
-						
-						String query = "insert into local (nome, endereco, numero, ponto_referencia, cidade, estado) "
+
+						String query = "insert into local (nome, endereco, numero, ponto_referencia, cidade, estado, latitude, longitude) "
 								+ "values ('" + local.getNome() + "', '" + local.getEndereco() + "', '"
 								+ local.getNumero() + "', '" + local.getPontoReferencia() + "',  '" + local.getCidade()
-								+ "', '" + local.getEstado() + "')";
+								+ "', '" + local.getEstado() + "', '" + latitude + "', '" + longitude + "')";
 						st.execute(query);
 
 						st.close();
 						conn.close();
-						Toast.show("Local cadastrado com sucesso!", 2000);
+
+						Toast.show("Local cadastrado com sucesso! " + "Latitude = " + latitude + " / Longitude = " + longitude, 5000);
+						
 						ListaLocais ll = new ListaLocais();
 						ll.popup();
 					}

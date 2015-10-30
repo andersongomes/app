@@ -89,7 +89,7 @@ public class App extends MainWindow {
 
 		// btInsert.setBackColor(Color.GREEN);
 
-		btClear.setBackColor(Color.BLUE);
+		btClear.setBackColor(Color.WHITE);
 
 		btTeste.setBackColor(Color.GREEN);
 
@@ -101,7 +101,7 @@ public class App extends MainWindow {
 			st.execute(
 					"create table if not exists usuario (id_usuario integer primary key autoincrement, nome varchar, usuario varchar, senha varchar)");
 			st.execute(
-					"create table if not exists local (codigo integer primary key autoincrement, nome varchar, endereco varchar, numero varchar, ponto_referencia varchar, cidade varchar, estado varchar)");
+					"create table if not exists local (codigo integer primary key autoincrement, nome varchar, endereco varchar, numero varchar, ponto_referencia varchar, cidade varchar, estado varchar, latitude varchar, longitude varchar)");
 
 			String query = "select * from usuario limit 1";
 			int x = 0;
@@ -113,7 +113,7 @@ public class App extends MainWindow {
 				}
 				rs.close();
 				if (x == 0) {
-					System.out.println("Não existem registros!");
+					// System.out.println("Não existem registros!");
 					st.execute("insert into usuario (nome, usuario, senha) values ('Administrador', 'admin', '12345')");
 				}
 			} catch (SQLException e) {
@@ -132,7 +132,7 @@ public class App extends MainWindow {
 			exit(0);
 
 		}
-		
+
 		Toast.posY = CENTER;
 
 	}

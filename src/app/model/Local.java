@@ -9,6 +9,8 @@ public class Local {
 	private String pontoReferencia;
 	private String cidade;
 	private String estado;
+	private String latitude;
+	private String longitude;
 
 	// getters and setters
 
@@ -68,4 +70,19 @@ public class Local {
 		this.estado = estado;
 	}
 
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
 }

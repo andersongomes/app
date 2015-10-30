@@ -4,7 +4,10 @@ import java.sql.SQLException;
 
 import totalcross.sys.Settings;
 import totalcross.ui.Button;
+import totalcross.ui.Label;
+import totalcross.ui.Spacer;
 import totalcross.ui.Window;
+import totalcross.ui.dialog.MessageBox;
 import totalcross.ui.event.ControlEvent;
 import totalcross.ui.event.Event;
 import totalcross.ui.gfx.Color;
@@ -12,7 +15,7 @@ import totalcross.ui.gfx.Color;
 public class TelaInicial extends Window {
 
 	Button listar, addLocal, verificarGps;
-	
+
 	public TelaInicial() {
 		super("App Seleção SoftSite", VERTICAL_GRADIENT);
 
@@ -22,22 +25,19 @@ public class TelaInicial extends Window {
 		Settings.uiAdjustmentsBasedOnFontHeight = true;
 
 		setBackColor(0xDDDDFF);
-		
-		addLocal = new Button("Inserir Local");
+
+		Spacer sp = new Spacer(0, 0);
+		add(new Label("TELA INICIAL DO APP: "), CENTER, AFTER + 50);
+		add(sp, CENTER, TOP + 400, PARENTSIZE + 10, PREFERRED);
+
+		add(addLocal = new Button("INSERIR LOCAL"), BEFORE, SAME, PARENTSIZE + 40, PREFERRED, sp);
 		addLocal.setBackColor(Color.GREEN);
 		addLocal.setForeColor(Color.WHITE);
-		add(addLocal, LEFT, SAME);
-		
-		verificarGps = new Button("VERIFICAR LOCAL");
-		verificarGps.setBackColor(Color.WHITE);
-		add(verificarGps, CENTER, SAME);
-		
-		listar = new Button("LISTAR");
+
+		add(listar = new Button("LISTAR"), AFTER, SAME, PARENTSIZE + 40, PREFERRED, sp);
 		listar.setBackColor(Color.GREEN);
 		listar.setForeColor(Color.WHITE);
-		add(listar, RIGHT, SAME);
-		
-		
+
 	}
 
 	public void onEvent(Event event) {
@@ -47,12 +47,14 @@ public class TelaInicial extends Window {
 				ll = new ListaLocais();
 				ll.popup();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				MessageBox.showException(e, true);
 			}
-		} else if (event.type == ControlEvent.PRESSED && event.target == addLocal){
+		} else if (event.type == ControlEvent.PRESSED && event.target == addLocal) {
 			AddLocal al = new AddLocal();
-        	al.popup();
+			al.popup();
+		} else if (event.type == ControlEvent.PRESSED && event.target == verificarGps) {
+			GpsView gv = new GpsView();
+			gv.popup();
 		}
 	}
 }
