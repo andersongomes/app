@@ -38,39 +38,39 @@ public class AddLocal extends Window {
 		add(new Label("Cadastre um Lugar"), CENTER, TOP + 50);
 
 		add(new Label("Nome: "), LEFT + 100, AFTER);
-		add(nome = new Edit(), LEFT, 60);
-		nome.setRect(LEFT + 100, AFTER, 285, 30);
+		add(nome = new Edit(), LEFT, SAME);
+		nome.setRect(LEFT + 100, AFTER, FILL-100, 25);
 
 		add(new Label("Endereço: "), LEFT + 100, AFTER);
-		add(endereco = new Edit(), LEFT, 120);
-		endereco.setRect(LEFT + 100, AFTER - 10, 285, 30);
+		add(endereco = new Edit(), LEFT, SAME);
+		endereco.setRect(LEFT + 100, AFTER - 10, FILL-100, 25);
 
 		add(new Label("Número: "), LEFT + 100, AFTER);
-		add(numero = new Edit(), LEFT, 180);
-		numero.setRect(LEFT + 100, AFTER - 10, 285, 30);
+		add(numero = new Edit(), LEFT, SAME);
+		numero.setRect(LEFT + 100, AFTER - 10, FILL-100, 25);
 
-		add(new Label("Ponto de Referência: "), LEFT + 100, AFTER + 50);
-		add(pontoReferencia = new Edit(), LEFT, 240);
-		pontoReferencia.setRect(LEFT + 100, AFTER - 10, 285, 30);
+		add(new Label("Ponto de Referência: "), LEFT + 100, AFTER);
+		add(pontoReferencia = new Edit(), LEFT, SAME);
+		pontoReferencia.setRect(LEFT + 100, AFTER - 10, FILL-100, 25);
 
-		add(new Label("Cidade: "), LEFT + 100, AFTER + 50);
-		add(cidade = new Edit(), LEFT, 300);
-		cidade.setRect(LEFT + 100, AFTER - 10, 285, 30);
+		add(new Label("Cidade: "), LEFT + 100, AFTER);
+		add(cidade = new Edit(), LEFT, SAME);
+		cidade.setRect(LEFT + 100, AFTER - 10, FILL-100, 25);
 
-		add(new Label("Estado: "), LEFT + 100, AFTER + 50);
-		add(estado = new Edit(), LEFT, 360);
-		estado.setRect(LEFT + 100, AFTER - 10, 285, 30);
+		add(new Label("Estado: "), LEFT + 100, AFTER);
+		add(estado = new Edit(), LEFT, SAME);
+		estado.setRect(LEFT + 100, AFTER - 10, FILL-100, 25);
 
 		Spacer sp = new Spacer(0, 0);
 
-		add(sp, CENTER, BOTTOM - 300, PARENTSIZE + 10, PREFERRED);
+		add(sp, CENTER, BOTTOM - 200, PARENTSIZE + 10, PREFERRED);
 
-		add(salvar = new Button("Salvar"), LEFT + 100, SAME, 80, 30, sp);
+		add(salvar = new Button("Salvar"), LEFT + 100, SAME, PREFERRED+100, 25, sp);
 		salvar.setBackColor(Color.GREEN);
 
-		add(btClear = new Button("Limpar"), CENTER, SAME, 80, 30, sp);
+		add(btClear = new Button("Limpar"), CENTER, SAME, PREFERRED+100, 25, sp);
 
-		add(cancelar = new Button("Cancelar"), RIGHT - 100, SAME, 80, 30, sp);
+		add(cancelar = new Button("Cancelar"), RIGHT - 100, SAME, PREFERRED+100, 25, sp);
 		cancelar.setBackColor(Color.RED);
 		cancelar.setForeColor(Color.WHITE);
 	}

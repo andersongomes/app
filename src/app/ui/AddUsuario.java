@@ -33,35 +33,35 @@ public class AddUsuario extends Window {
 		add(new Label("Cadastre um Lugar"), CENTER, TOP + 50);
 
 		add(new Label("Nome: "), LEFT + 100, AFTER);
-		add(nome = new Edit(), LEFT, 60);
-		nome.setRect(LEFT + 100, AFTER, 285, 30);
+		add(nome = new Edit(), LEFT, SAME);
+		nome.setRect(LEFT + 100, AFTER, FILL-100, 25);
 
 		add(new Label("Usuário: "), LEFT + 100, AFTER);
-		add(usuario = new Edit(), LEFT, 120);
-		usuario.setRect(LEFT + 100, AFTER - 10, 285, 30);
+		add(usuario = new Edit(), LEFT, SAME);
+		usuario.setRect(LEFT + 100, AFTER - 10, FILL-100, 25);
 
 		add(new Label("Senha: "), LEFT + 100, AFTER);
 		senha = new Edit();
 		senha.setMode(senha.PASSWORD_ALL);
-		add(senha, LEFT, 180);
-		senha.setRect(LEFT + 100, AFTER - 10, 285, 30);
+		add(senha, LEFT, SAME);
+		senha.setRect(LEFT + 100, AFTER - 10, FILL-100, 25);
 
 		add(new Label("Re-Senha: "), LEFT + 100, AFTER);
 		resenha = new Edit();
 		resenha.setMode(resenha.PASSWORD_ALL);
-		add(resenha, LEFT, 240);
-		resenha.setRect(LEFT + 100, AFTER - 10, 285, 30);
+		add(resenha, LEFT, SAME);
+		resenha.setRect(LEFT + 100, AFTER - 10, FILL-100, 25);
 
 		Spacer sp = new Spacer(0, 0);
 
-		add(sp, CENTER, BOTTOM - 300, PARENTSIZE + 10, PREFERRED);
+		add(sp, CENTER, BOTTOM - 200, PARENTSIZE + 10, PREFERRED);
 
-		add(salvar = new Button("Salvar"), LEFT + 100, SAME, 80, 30, sp);
+		add(salvar = new Button("Salvar"), LEFT + 100, SAME, PREFERRED+100, 25, sp);
 		salvar.setBackColor(Color.GREEN);
 
-		add(btClear = new Button("Limpar"), CENTER, SAME, 80, 30, sp);
+		add(btClear = new Button("Limpar"), CENTER, SAME, PREFERRED+100, 25, sp);
 
-		add(cancelar = new Button("Cancelar"), RIGHT - 100, SAME, 80, 30, sp);
+		add(cancelar = new Button("Cancelar"), RIGHT - 100, SAME, PREFERRED+100, 25, sp);
 		cancelar.setBackColor(Color.RED);
 		cancelar.setForeColor(Color.WHITE);
 	}

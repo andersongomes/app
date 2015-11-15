@@ -64,19 +64,25 @@ public class ListaUsuarios extends Window {
 		}
 		grid.setItems(lista);
 
-		Spacer sp = new Spacer(0, 0);
+		Spacer sp = new Spacer(0, 0), sp2 = new Spacer(0, 0);
 
 		add(sp, CENTER, BOTTOM - 200, PARENTSIZE + 10, PREFERRED);
-
-		add(addUsuario = new Button("ADICIONAR"), LEFT, SAME, PARENTSIZE + 30, 30, sp);
+		add(sp2, CENTER, BOTTOM - 400, PARENTSIZE + 10, PREFERRED);
+		
+		add(sair = new Button("Voltar"), LEFT, SAME, PREFERRED+100, 25, sp2);
+		sair.setBackColor(Color.RED);
+		sair.setForeColor(Color.WHITE);
+		
+		add(addUsuario = new Button("ADICIONAR"), LEFT, SAME, PREFERRED+100, 25, sp);
 		addUsuario.setBackColor(Color.GREEN);
 		addUsuario.setForeColor(Color.WHITE);
-		add(editar = new Button("EDITAR"), CENTER, SAME, PARENTSIZE + 30, 30, sp);
+		add(editar = new Button("EDITAR"), CENTER, SAME, PREFERRED+100, 25, sp);
 		editar.setBackColor(Color.YELLOW);
 		editar.setForeColor(Color.WHITE);
-		add(excluir = new Button("EXCLUIR"), RIGHT, SAME, PARENTSIZE + 30, 30, sp);
+		add(excluir = new Button("EXCLUIR"), RIGHT, SAME, PREFERRED+100, 25, sp);
 		excluir.setBackColor(Color.RED);
 		excluir.setForeColor(Color.WHITE);
+		
 	}
 
 	public void onEvent(Event event) {
@@ -127,7 +133,10 @@ public class ListaUsuarios extends Window {
 						MessageBox.showException(e, true);
 					}
 				}
-			}
+			} else if (event.type == ControlEvent.PRESSED && event.target == sair) {
+				TelaInicial ti = new TelaInicial();
+				ti.popup();
+			} 
 		}
 	}
 

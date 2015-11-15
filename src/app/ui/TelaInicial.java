@@ -30,11 +30,11 @@ public class TelaInicial extends Window {
 		add(new Label("TELA INICIAL DO APP: "), CENTER, AFTER + 50);
 		add(sp, CENTER, TOP + 400, PARENTSIZE + 10, PREFERRED);
 
-		add(addLocal = new Button("INSERIR LOCAL"), BEFORE, SAME, PARENTSIZE + 40, 30, sp);
+		add(addLocal = new Button("INSERIR LOCAL"), BEFORE, 100, PARENTSIZE + 40, 30, sp);
 		addLocal.setBackColor(Color.GREEN);
 		addLocal.setForeColor(Color.WHITE);
 
-		add(listar = new Button("LISTAR LOCAIS"), AFTER, SAME, PARENTSIZE + 40, 30, sp);
+		add(listar = new Button("LISTAR LOCAIS"), AFTER, 100, PARENTSIZE + 40, 30, sp);
 		listar.setBackColor(Color.GREEN);
 		listar.setForeColor(Color.WHITE);
 		

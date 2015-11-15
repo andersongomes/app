@@ -42,13 +42,13 @@ public class App extends MainWindow {
 
 		add(new Label("Usuario: "), LEFT+100, AFTER + 100);
 		add(usuario = new Edit(), LEFT, AFTER);
-		usuario.setRect(LEFT+100,AFTER+2,280,30);
+		usuario.setRect(LEFT+100,AFTER+2,FILL-100,30);
 		
 		add(new Label("Senha: "), LEFT+100, AFTER + 50);
 		senha = new Edit();
 		senha.setMode(senha.PASSWORD_ALL);
 		add(senha, LEFT+100, AFTER);
-		senha.setRect(LEFT+100,AFTER+2,280,30);
+		senha.setRect(LEFT+100,AFTER+2,FILL-100,30);
 		
 		Spacer sp = new Spacer(0, 0);
 

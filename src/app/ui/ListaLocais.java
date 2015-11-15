@@ -66,17 +66,22 @@ public class ListaLocais extends Window {
 		}
 		grid.setItems(lista);
 
-		Spacer sp = new Spacer(0, 0);
+		Spacer sp = new Spacer(0, 0), sp2 = new Spacer(0, 0);
 
 		add(sp, CENTER, BOTTOM - 200, PARENTSIZE + 10, PREFERRED);
+		add(sp2, CENTER, BOTTOM - 400, PARENTSIZE + 10, PREFERRED);
 
-		add(addLocal = new Button("ADICIONAR"), LEFT, SAME, PARENTSIZE + 30, 30, sp);
+		add(sair = new Button("Voltar"), LEFT, SAME, PREFERRED+100, 25, sp2);
+		sair.setBackColor(Color.RED);
+		sair.setForeColor(Color.WHITE);
+		
+		add(addLocal = new Button("ADICIONAR"), LEFT, SAME, PREFERRED+100, 25, sp);
 		addLocal.setBackColor(Color.GREEN);
 		addLocal.setForeColor(Color.WHITE);
-		add(editar = new Button("EDITAR"), CENTER, SAME, PARENTSIZE + 30, 30, sp);
+		add(editar = new Button("EDITAR"), CENTER, SAME, PREFERRED+100, 25, sp);
 		editar.setBackColor(Color.YELLOW);
 		editar.setForeColor(Color.WHITE);
-		add(excluir = new Button("EXCLUIR"), RIGHT, SAME, PARENTSIZE + 30, 30, sp);
+		add(excluir = new Button("EXCLUIR"), RIGHT, SAME, PREFERRED+100, 25, sp);
 		excluir.setBackColor(Color.RED);
 		excluir.setForeColor(Color.WHITE);
 	}
@@ -128,7 +133,10 @@ public class ListaLocais extends Window {
 					} catch (SQLException e) {
 						MessageBox.showException(e, true);
 					}
-				}
+				} 
+			} else if (event.type == ControlEvent.PRESSED && event.target == sair) {
+				TelaInicial ti = new TelaInicial();
+				ti.popup();
 			}
 		}
 	}
