@@ -1,15 +1,9 @@
 package app.ui;
 
-import java.sql.SQLException;
-
+import app.dao.LocalDAO;
 import app.model.Local;
 import totalcross.io.IOException;
 import totalcross.map.GoogleMaps;
-import totalcross.sql.Connection;
-import totalcross.sql.DriverManager;
-import totalcross.sql.ResultSet;
-import totalcross.sql.Statement;
-import totalcross.sys.Convert;
 import totalcross.sys.InvalidNumberException;
 import totalcross.sys.Settings;
 import totalcross.ui.Button;
@@ -26,10 +20,12 @@ public class Editar extends Window {
 
 	private Edit nome, endereco, numero, pontoReferencia, cidade, estado;
 	private Button salvar, cancelar, btClear;
-	private Connection conn;
 	String id;
+	@SuppressWarnings(value = "unused")
 	private GoogleMaps gm;
 	private String latitude, longitude;
+	private LocalDAO localDAO;
+	private Local local;
 
 	public Editar(String id) {
 		super("App Seleção SoftSite", VERTICAL_GRADIENT);
@@ -61,26 +57,15 @@ public class Editar extends Window {
 		add(new Label("Estado: "), LEFT, AFTER + 50);
 		add(estado = new Edit(), LEFT, AFTER);
 
-		try {
-			conn = DriverManager.getConnection("jdbc:sqlite:" + Convert.appendPath(Settings.appPath, "test.db"));
-			Statement st = conn.createStatement();
+		localDAO = new LocalDAO();
+		local = localDAO.selecionarPorId(id);
 
-			String query = "select * from local where codigo = " + id;
-			ResultSet rs = st.executeQuery(query);
-			while (rs.next()) {
-				nome.setText((String) rs.getObject("nome"));
-				endereco.setText((String) rs.getObject("endereco"));
-				numero.setText((String) rs.getObject("numero"));
-				pontoReferencia.setText((String) rs.getObject("ponto_referencia"));
-				cidade.setText((String) rs.getObject("cidade"));
-				estado.setText((String) rs.getObject("estado"));
-			}
-
-			st.close();
-			conn.close();
-		} catch (SQLException e) {
-			MessageBox.showException(e, true);
-		}
+		nome.setText(local.getNome());
+		endereco.setText(local.getEndereco());
+		numero.setText(local.getNumero());
+		pontoReferencia.setText(local.getPontoReferencia());
+		cidade.setText(local.getCidade());
+		estado.setText(local.getEstado());
 
 		Spacer sp = new Spacer(0, 0);
 
@@ -94,11 +79,8 @@ public class Editar extends Window {
 	}
 
 	public void onEvent(Event e) {
-
 		try {
-
 			switch (e.type) {
-
 			case ControlEvent.PRESSED:
 
 				if (e.target == btClear) {
@@ -108,26 +90,15 @@ public class Editar extends Window {
 							|| pontoReferencia.getLength() == 0 || cidade.getLength() == 0 || estado.getLength() == 0) {
 						Toast.show("Por favor, preencha todos os campos!!", 2000);
 					} else {
-
-						Local local = new Local();
-						local.setCidade(cidade.getText());
-						local.setEndereco(endereco.getText());
-						local.setEstado(estado.getText());
-						local.setNome(nome.getText());
-						local.setNumero(numero.getText());
-						local.setPontoReferencia(pontoReferencia.getText());
-
 						gm = new GoogleMaps();
 						double[] x = null;
 						try {
 							x = GoogleMaps.getLocation(endereco.getText() + " " + numero.getText() + ", "
 									+ cidade.getText() + ", " + estado.getText());
 						} catch (IOException | InvalidNumberException eee) {
-							// MessageBox.showException(eee, true);
 							latitude = "0";
 							longitude = "0";
 						}
-
 						if (x == null) {
 							latitude = "0";
 							longitude = "0";
@@ -135,20 +106,12 @@ public class Editar extends Window {
 							latitude = Double.toString(x[0]);
 							longitude = Double.toString(x[1]);
 						}
-						conn = DriverManager
-								.getConnection("jdbc:sqlite:" + Convert.appendPath(Settings.appPath, "test.db"));
+						local = new Local(Integer.parseInt(id), nome.getText(), endereco.getText(), numero.getText(),
+								pontoReferencia.getText(), cidade.getText(), estado.getText(), latitude, longitude);
 
-						Statement st = conn.createStatement();
+						localDAO = new LocalDAO();
+						localDAO.editar(local);
 
-						String query = "update local set nome = '" + local.getNome() + "', endereco = '"
-								+ local.getEndereco() + "', numero = '" + local.getNumero() + "', ponto_referencia = '"
-								+ local.getPontoReferencia() + "', cidade = '" + local.getCidade() + "', estado = '"
-								+ local.getEstado() + "', latitude = '" + latitude + "', longitude = '" + longitude
-								+ "' where codigo = " + id;
-						st.execute(query);
-
-						st.close();
-						conn.close();
 						Toast.show("Local editado com sucesso! " + "Nova Latitude = " + latitude
 								+ " / Nova Longitude = " + longitude, 5000);
 
@@ -159,17 +122,10 @@ public class Editar extends Window {
 					TelaInicial ti = new TelaInicial();
 					ti.popup();
 				}
-
 				break;
-
 			}
-
-		}
-
-		catch (Exception ee) {
-
+		} catch (Exception ee) {
 			MessageBox.showException(ee, true);
-
 		}
 
 	}

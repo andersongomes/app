@@ -1,17 +1,11 @@
 package app.ui;
 
-import app.model.Local;
 import totalcross.io.IOException;
 import totalcross.io.device.PortConnector;
 import totalcross.io.device.gps.GPS;
 import totalcross.map.GoogleMaps;
-import totalcross.phone.CellInfo;
-import totalcross.sql.DriverManager;
-import totalcross.sql.Statement;
-import totalcross.sys.Convert;
 import totalcross.sys.InvalidNumberException;
 import totalcross.sys.Settings;
-import totalcross.sys.Vm;
 import totalcross.ui.Button;
 import totalcross.ui.Label;
 import totalcross.ui.Spacer;
@@ -45,6 +39,7 @@ public class GpsView extends Window {
 		add(sp, CENTER, BOTTOM - 300, PARENTSIZE + 10, PREFERRED);
 		add(cancelar = new Button("Cancelar"), RIGHT, SAME, PARENTSIZE + 30, PREFERRED, sp);
 
+		@SuppressWarnings("unused")
 		GoogleMaps gm = new GoogleMaps();
 
 		try {

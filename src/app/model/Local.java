@@ -12,6 +12,35 @@ public class Local {
 	private String latitude;
 	private String longitude;
 
+	public Local() {
+	}
+
+	public Local(int codigo, String nome, String endereco, String numero, String pontoReferencia, String cidade,
+			String estado, String latitude, String longitude) {
+		this.codigo = codigo;
+		this.nome = nome;
+		this.endereco = endereco;
+		this.numero = numero;
+		this.pontoReferencia = pontoReferencia;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+	
+	public Local(String nome, String endereco, String numero, String pontoReferencia, String cidade,
+			String estado, String latitude, String longitude) {
+		this.nome = nome;
+		this.endereco = endereco;
+		this.numero = numero;
+		this.pontoReferencia = pontoReferencia;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+
+	
 	// getters and setters
 
 	public int getCodigo() {

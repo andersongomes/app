@@ -9,17 +9,13 @@ import totalcross.sys.Settings;
 
 public class ConnectionFactory {
 	
-	private static Connection dbcon;
-	
 	public ConnectionFactory() {}
 
-	public static Connection getConnection() {
+	public Connection getConnection() {
 		try {
-			dbcon = DriverManager.getConnection("jdbc:sqlite:" + Convert.appendPath(Settings.appPath, "test.db"));
+			return DriverManager.getConnection("jdbc:sqlite:" + Convert.appendPath(Settings.appPath, "test.db"));
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
-		
-		return dbcon;
 	}
 }

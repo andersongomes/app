@@ -7,6 +7,15 @@ public class Usuario {
 	private String usuario;
 	private String senha;
 
+	public Usuario(){}
+	
+	public Usuario(int id, String nome, String usuario, String senha){
+		this.id = id;
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
+	}
+	
 	// getters and setters
 
 	public int getId() {

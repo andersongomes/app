@@ -1,12 +1,9 @@
 package app.ui;
 
+import app.dao.LocalDAO;
 import app.model.Local;
 import totalcross.io.IOException;
 import totalcross.map.GoogleMaps;
-import totalcross.sql.Connection;
-import totalcross.sql.DriverManager;
-import totalcross.sql.Statement;
-import totalcross.sys.Convert;
 import totalcross.sys.InvalidNumberException;
 import totalcross.sys.Settings;
 import totalcross.ui.Button;
@@ -23,7 +20,7 @@ public class AddLocal extends Window {
 
 	private Edit nome, endereco, numero, pontoReferencia, cidade, estado;
 	private Button salvar, cancelar, btClear;
-	private Connection conn;
+	@SuppressWarnings(value = "unused")
 	private GoogleMaps gm;
 	private String latitude, longitude;
 
@@ -70,13 +67,9 @@ public class AddLocal extends Window {
 	}
 
 	public void onEvent(Event e) {
-
 		try {
-
 			switch (e.type) {
-
 			case ControlEvent.PRESSED:
-
 				if (e.target == btClear) {
 					clear();
 				} else if (e.target == salvar) {
@@ -84,25 +77,15 @@ public class AddLocal extends Window {
 							|| pontoReferencia.getLength() == 0 || cidade.getLength() == 0 || estado.getLength() == 0) {
 						Toast.show("Por favor, preencha todos os campos!!", 2000);
 					} else {
-
-						Local local = new Local();
-						local.setCidade(cidade.getText());
-						local.setEndereco(endereco.getText());
-						local.setEstado(estado.getText());
-						local.setNome(nome.getText());
-						local.setNumero(numero.getText());
-						local.setPontoReferencia(pontoReferencia.getText());
-						
 						gm = new GoogleMaps();
 						double[] x = null;
 						try {
-							x = GoogleMaps.getLocation(endereco.getText() + " " + numero.getText() + ", " + cidade.getText() + ", " + estado.getText());
+							x = GoogleMaps.getLocation(endereco.getText() + " " + numero.getText() + ", "
+									+ cidade.getText() + ", " + estado.getText());
 						} catch (IOException | InvalidNumberException eee) {
-							// MessageBox.showException(eee, true);
 							latitude = "0";
 							longitude = "0";
 						}
-
 						if (x == null) {
 							latitude = "0";
 							longitude = "0";
@@ -110,22 +93,15 @@ public class AddLocal extends Window {
 							latitude = Double.toString(x[0]);
 							longitude = Double.toString(x[1]);
 						}
-						conn = DriverManager
-								.getConnection("jdbc:sqlite:" + Convert.appendPath(Settings.appPath, "test.db"));
 
-						Statement st = conn.createStatement();
+						Local local = new Local(nome.getText(), endereco.getText(), numero.getText(),
+								pontoReferencia.getText(), cidade.getText(), estado.getText(), latitude, longitude);
+						LocalDAO localDAO = new LocalDAO();
+						localDAO.salvar(local);
 
-						String query = "insert into local (nome, endereco, numero, ponto_referencia, cidade, estado, latitude, longitude) "
-								+ "values ('" + local.getNome() + "', '" + local.getEndereco() + "', '"
-								+ local.getNumero() + "', '" + local.getPontoReferencia() + "',  '" + local.getCidade()
-								+ "', '" + local.getEstado() + "', '" + latitude + "', '" + longitude + "')";
-						st.execute(query);
+						Toast.show("Local cadastrado com sucesso! " + "Latitude = " + latitude + " / Longitude = "
+								+ longitude, 5000);
 
-						st.close();
-						conn.close();
-
-						Toast.show("Local cadastrado com sucesso! " + "Latitude = " + latitude + " / Longitude = " + longitude, 5000);
-						
 						ListaLocais ll = new ListaLocais();
 						ll.popup();
 					}
@@ -133,19 +109,10 @@ public class AddLocal extends Window {
 					TelaInicial ti = new TelaInicial();
 					ti.popup();
 				}
-
 				break;
-
 			}
-
-		}
-
-		catch (Exception ee) {
-
+		} catch (Exception ee) {
 			MessageBox.showException(ee, true);
-
 		}
-
 	}
-
 }

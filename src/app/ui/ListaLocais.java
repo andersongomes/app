@@ -1,12 +1,10 @@
 package app.ui;
 
 import java.sql.SQLException;
+import java.util.List;
 
-import totalcross.sql.Connection;
-import totalcross.sql.DriverManager;
-import totalcross.sql.ResultSet;
-import totalcross.sql.Statement;
-import totalcross.sys.Convert;
+import app.dao.LocalDAO;
+import app.model.Local;
 import totalcross.sys.Settings;
 import totalcross.ui.Button;
 import totalcross.ui.Grid;
@@ -25,7 +23,7 @@ public class ListaLocais extends Window {
 	Button addLocal, editar, excluir, sair;
 	ListBox lb;
 	Grid grid;
-	private Connection conn;
+	LocalDAO localDAO;
 
 	public ListaLocais() throws SQLException {
 		super("App Seleção SoftSite", VERTICAL_GRADIENT);
@@ -39,11 +37,8 @@ public class ListaLocais extends Window {
 
 		add(new Label("Lugares Cadastrados"), CENTER, TOP + 50);
 
-		conn = DriverManager.getConnection("jdbc:sqlite:" + Convert.appendPath(Settings.appPath, "test.db"));
-		Statement st = conn.createStatement();
-
-		String query = "select * from local";
-		ResultSet rs = st.executeQuery(query);
+		localDAO = new LocalDAO();
+		List<Local> locais = localDAO.listar();
 
 		Rect r = getClientRect();
 
@@ -57,23 +52,19 @@ public class ListaLocais extends Window {
 		String[][] data2 = new String[100][4];
 		int i, j;
 		i = j = 0;
-		try {
-			while (rs.next()) {
-				int x = (int) rs.getObject("codigo");
-				data2[i][j] = (String) Integer.toString(x);
-				j++;
-				data2[i][j] = (String) rs.getObject("nome");
-				j++;
-				data2[i][j] = (String) rs.getObject("estado");
-				j++;
-				data2[i][j] = (String) rs.getObject("cidade");
-				j = 0;
-				i++;
-			}
-			grid.setItems(data2);
-		} catch (SQLException e) {
-			MessageBox.showException(e, true);
+
+		for (Local local : locais) {
+			data2[i][j] = Integer.toString(local.getCodigo());
+			j++;
+			data2[i][j] = local.getNome();
+			j++;
+			data2[i][j] = local.getEstado();
+			j++;
+			data2[i][j] = local.getCidade();
+			j = 0;
+			i++;
 		}
+		grid.setItems(data2);
 
 		Spacer sp = new Spacer(0, 0);
 
@@ -88,23 +79,13 @@ public class ListaLocais extends Window {
 		add(excluir = new Button("EXCLUIR"), RIGHT, SAME, PARENTSIZE + 30, PREFERRED, sp);
 		excluir.setBackColor(Color.RED);
 		excluir.setForeColor(Color.WHITE);
-		/*
-		 * Spacer sp2 = new Spacer(0, 0);
-		 * 
-		 * add(sp2, CENTER, BOTTOM - 400, PARENTSIZE + 10, PREFERRED); add(sair
-		 * = new Button("LOGOUT"), LEFT, SAME, PARENTSIZE + 30, PREFERRED, sp2);
-		 * sair.setBackColor(Color.RED); sair.setForeColor(Color.WHITE);
-		 */
-
-		rs.close();
-		st.close();
-		conn.close();
 	}
 
 	public void onEvent(Event event) {
 		switch (event.type) {
 		case ControlEvent.PRESSED:
 			if (event.target == grid) {
+				@SuppressWarnings(value = "unused")
 				Object element = grid.getSelectedItem();
 			} else if (event.type == ControlEvent.PRESSED && event.target == addLocal) {
 				AddLocal al = new AddLocal();
@@ -126,7 +107,7 @@ public class ListaLocais extends Window {
 				}
 			} else if (event.type == ControlEvent.PRESSED && event.target == excluir) {
 				if (grid.getSelectedItem() == null) {
-					Toast.show("Selecione pelo menos um item para excluir!", 2000);
+					Toast.show("Selecione pelo menos um local para excluir!", 2000);
 					ListaLocais ll;
 					try {
 						ll = new ListaLocais();
@@ -136,15 +117,11 @@ public class ListaLocais extends Window {
 					}
 				} else {
 					try {
-						conn = DriverManager
-								.getConnection("jdbc:sqlite:" + Convert.appendPath(Settings.appPath, "test.db"));
-						Statement st = conn.createStatement();
 						String value[] = (String[]) grid.getSelectedItem();
 
-						String query = "delete from local where codigo = " + value[0];
-						st.execute(query);
-						st.close();
-						conn.close();
+						localDAO = new LocalDAO();
+						localDAO.excluir(value[0]);
+
 						Toast.show("Local excluído com sucesso!", 2000);
 						ListaLocais ll = new ListaLocais();
 						ll.popup();
