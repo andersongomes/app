@@ -14,7 +14,7 @@ import totalcross.ui.gfx.Color;
 
 public class TelaInicial extends Window {
 
-	Button listar, addLocal, verificarGps;
+	Button listar, addLocal, verificarGps, listarUsuarios, addUsuario;
 
 	public TelaInicial() {
 		super("App Seleção SoftSite", VERTICAL_GRADIENT);
@@ -30,13 +30,21 @@ public class TelaInicial extends Window {
 		add(new Label("TELA INICIAL DO APP: "), CENTER, AFTER + 50);
 		add(sp, CENTER, TOP + 400, PARENTSIZE + 10, PREFERRED);
 
-		add(addLocal = new Button("INSERIR LOCAL"), BEFORE, SAME, PARENTSIZE + 40, PREFERRED, sp);
+		add(addLocal = new Button("INSERIR LOCAL"), BEFORE, SAME, PARENTSIZE + 40, 30, sp);
 		addLocal.setBackColor(Color.GREEN);
 		addLocal.setForeColor(Color.WHITE);
 
-		add(listar = new Button("LISTAR"), AFTER, SAME, PARENTSIZE + 40, PREFERRED, sp);
+		add(listar = new Button("LISTAR LOCAIS"), AFTER, SAME, PARENTSIZE + 40, 30, sp);
 		listar.setBackColor(Color.GREEN);
 		listar.setForeColor(Color.WHITE);
+		
+		add(addUsuario = new Button("INSERIR USUÁRIO"), BEFORE, 150, PARENTSIZE + 40, 30, sp);
+		addUsuario.setBackColor(Color.GREEN);
+		addUsuario.setForeColor(Color.WHITE);
+
+		add(listarUsuarios = new Button("LISTAR USUARIOS"), AFTER, 150, PARENTSIZE + 40, 30, sp);
+		listarUsuarios.setBackColor(Color.GREEN);
+		listarUsuarios.setForeColor(Color.WHITE);
 
 	}
 
@@ -55,6 +63,17 @@ public class TelaInicial extends Window {
 		} else if (event.type == ControlEvent.PRESSED && event.target == verificarGps) {
 			GpsView gv = new GpsView();
 			gv.popup();
+		} else if (event.type == ControlEvent.PRESSED && event.target == addUsuario) {
+			AddUsuario au = new AddUsuario();
+			au.popup();
+		} else if (event.type == ControlEvent.PRESSED && event.target == listarUsuarios) {
+			ListaUsuarios ll;
+			try {
+				ll = new ListaUsuarios();
+				ll.popup();
+			} catch (SQLException e) {
+				MessageBox.showException(e, true);
+			}
 		}
 	}
 }

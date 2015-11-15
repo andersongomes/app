@@ -16,6 +16,13 @@ public class Usuario {
 		this.senha = senha;
 	}
 	
+	public Usuario(String nome, String usuario, String senha){
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
+	}
+	
+	
 	// getters and setters
 
 	public int getId() {

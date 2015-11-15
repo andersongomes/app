@@ -40,21 +40,23 @@ public class App extends MainWindow {
 
 		add(new Label("Efetue o seu Login"), CENTER, TOP + 50);
 
-		add(new Label("Usuario: "), LEFT, AFTER + 100);
+		add(new Label("Usuario: "), LEFT+100, AFTER + 100);
 		add(usuario = new Edit(), LEFT, AFTER);
-
-		add(new Label("Senha: "), LEFT, AFTER + 50);
+		usuario.setRect(LEFT+100,AFTER+2,280,30);
+		
+		add(new Label("Senha: "), LEFT+100, AFTER + 50);
 		senha = new Edit();
 		senha.setMode(senha.PASSWORD_ALL);
-		add(senha, LEFT, AFTER);
-
+		add(senha, LEFT+100, AFTER);
+		senha.setRect(LEFT+100,AFTER+2,280,30);
+		
 		Spacer sp = new Spacer(0, 0);
 
 		add(sp, CENTER, BOTTOM - 300, PARENTSIZE + 10, PREFERRED);
 
-		add(btLogin = new Button("Entrar"), BEFORE, SAME, PARENTSIZE + 40, PREFERRED, sp);
+		add(btLogin = new Button("Entrar"), BEFORE, SAME, PARENTSIZE + 40, 30, sp);
 
-		add(btClear = new Button("Limpar"), AFTER, SAME, PARENTSIZE + 40, PREFERRED, sp);
+		add(btClear = new Button("Limpar"), AFTER, SAME, PARENTSIZE + 40, 30, sp);
 
 		btClear.setBackColor(Color.WHITE);
 

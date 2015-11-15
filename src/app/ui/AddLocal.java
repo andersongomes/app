@@ -15,6 +15,7 @@ import totalcross.ui.Window;
 import totalcross.ui.dialog.MessageBox;
 import totalcross.ui.event.ControlEvent;
 import totalcross.ui.event.Event;
+import totalcross.ui.gfx.Color;
 
 public class AddLocal extends Window {
 
@@ -36,34 +37,42 @@ public class AddLocal extends Window {
 
 		add(new Label("Cadastre um Lugar"), CENTER, TOP + 50);
 
-		add(new Label("Nome: "), LEFT, AFTER + 100);
-		add(nome = new Edit(), LEFT, AFTER);
+		add(new Label("Nome: "), LEFT + 100, AFTER);
+		add(nome = new Edit(), LEFT, 60);
+		nome.setRect(LEFT + 100, AFTER, 285, 30);
 
-		add(new Label("Endereço: "), LEFT, AFTER + 50);
-		add(endereco = new Edit(), LEFT, AFTER);
+		add(new Label("Endereço: "), LEFT + 100, AFTER);
+		add(endereco = new Edit(), LEFT, 120);
+		endereco.setRect(LEFT + 100, AFTER - 10, 285, 30);
 
-		add(new Label("Número: "), LEFT, AFTER + 50);
-		add(numero = new Edit(), LEFT, AFTER);
+		add(new Label("Número: "), LEFT + 100, AFTER);
+		add(numero = new Edit(), LEFT, 180);
+		numero.setRect(LEFT + 100, AFTER - 10, 285, 30);
 
-		add(new Label("Ponto de Referência: "), LEFT, AFTER + 50);
-		add(pontoReferencia = new Edit(), LEFT, AFTER);
+		add(new Label("Ponto de Referência: "), LEFT + 100, AFTER + 50);
+		add(pontoReferencia = new Edit(), LEFT, 240);
+		pontoReferencia.setRect(LEFT + 100, AFTER - 10, 285, 30);
 
-		add(new Label("Cidade: "), LEFT, AFTER + 50);
-		add(cidade = new Edit(), LEFT, AFTER);
+		add(new Label("Cidade: "), LEFT + 100, AFTER + 50);
+		add(cidade = new Edit(), LEFT, 300);
+		cidade.setRect(LEFT + 100, AFTER - 10, 285, 30);
 
-		add(new Label("Estado: "), LEFT, AFTER + 50);
-		add(estado = new Edit(), LEFT, AFTER);
+		add(new Label("Estado: "), LEFT + 100, AFTER + 50);
+		add(estado = new Edit(), LEFT, 360);
+		estado.setRect(LEFT + 100, AFTER - 10, 285, 30);
 
 		Spacer sp = new Spacer(0, 0);
 
 		add(sp, CENTER, BOTTOM - 300, PARENTSIZE + 10, PREFERRED);
 
-		add(salvar = new Button("Salvar"), LEFT, SAME, PARENTSIZE + 30, PREFERRED, sp);
+		add(salvar = new Button("Salvar"), LEFT + 100, SAME, 80, 30, sp);
+		salvar.setBackColor(Color.GREEN);
 
-		add(btClear = new Button("Limpar"), CENTER, SAME, PARENTSIZE + 30, PREFERRED, sp);
+		add(btClear = new Button("Limpar"), CENTER, SAME, 80, 30, sp);
 
-		add(cancelar = new Button("Cancelar"), RIGHT, SAME, PARENTSIZE + 30, PREFERRED, sp);
-
+		add(cancelar = new Button("Cancelar"), RIGHT - 100, SAME, 80, 30, sp);
+		cancelar.setBackColor(Color.RED);
+		cancelar.setForeColor(Color.WHITE);
 	}
 
 	public void onEvent(Event e) {

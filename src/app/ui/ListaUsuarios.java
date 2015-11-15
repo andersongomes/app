@@ -3,8 +3,8 @@ package app.ui;
 import java.sql.SQLException;
 import java.util.List;
 
-import app.dao.LocalDAO;
-import app.model.Local;
+import app.dao.UsuarioDAO;
+import app.model.Usuario;
 import totalcross.sys.Settings;
 import totalcross.ui.Button;
 import totalcross.ui.Grid;
@@ -19,13 +19,13 @@ import totalcross.ui.event.Event;
 import totalcross.ui.gfx.Color;
 import totalcross.ui.gfx.Rect;
 
-public class ListaLocais extends Window {
-	Button addLocal, editar, excluir, sair;
+public class ListaUsuarios extends Window {
+	Button addUsuario, editar, excluir, sair;
 	ListBox lb;
 	Grid grid;
-	LocalDAO localDAO;
+	UsuarioDAO usuarioDAO;
 
-	public ListaLocais() throws SQLException {
+	public ListaUsuarios() throws SQLException {
 		super("App Seleção SoftSite", VERTICAL_GRADIENT);
 
 		gradientTitleStartColor = 0;
@@ -35,32 +35,30 @@ public class ListaLocais extends Window {
 
 		setBackColor(0xDDDDFF);
 
-		add(new Label("Lugares Cadastrados"), CENTER, TOP + 50);
+		add(new Label("Usuarios Cadastrados"), CENTER, TOP + 50);
 
-		localDAO = new LocalDAO();
-		List<Local> locais = localDAO.listar();
+		usuarioDAO = new UsuarioDAO();
+		List<Usuario> usuarios = usuarioDAO.listar();
 
 		Rect r = getClientRect();
 
-		String[] gridCaptions = { " ID ", " Nome ", " Estado ", " Cidade " };
-		int gridWidths[] = { -5, -35, -30, -30 };
-		int gridAligns[] = { LEFT, LEFT, LEFT, LEFT };
+		String[] gridCaptions = { " ID ", " Nome ", " Usuário " };
+		int gridWidths[] = { -5, -55, -40, };
+		int gridAligns[] = { LEFT, LEFT, LEFT};
 		grid = new Grid(gridCaptions, gridWidths, gridAligns, false);
 		add(grid, LEFT + 5, TOP + 5, r.width, r.height / 2 + r.height / 3);
 		grid.secondStripeColor = Color.getRGB(235, 235, 235);
 
-		String[][] lista = new String[100][4];
+		String[][] lista = new String[100][3];
 		int i, j;
 		i = j = 0;
 
-		for (Local local : locais) {
-			lista[i][j] = Integer.toString(local.getCodigo());
+		for (Usuario usuario : usuarios) {
+			lista[i][j] = Integer.toString(usuario.getId());
 			j++;
-			lista[i][j] = local.getNome();
+			lista[i][j] = usuario.getNome();
 			j++;
-			lista[i][j] = local.getEstado();
-			j++;
-			lista[i][j] = local.getCidade();
+			lista[i][j] = usuario.getUsuario();
 			j = 0;
 			i++;
 		}
@@ -70,9 +68,9 @@ public class ListaLocais extends Window {
 
 		add(sp, CENTER, BOTTOM - 200, PARENTSIZE + 10, PREFERRED);
 
-		add(addLocal = new Button("ADICIONAR"), LEFT, SAME, PARENTSIZE + 30, 30, sp);
-		addLocal.setBackColor(Color.GREEN);
-		addLocal.setForeColor(Color.WHITE);
+		add(addUsuario = new Button("ADICIONAR"), LEFT, SAME, PARENTSIZE + 30, 30, sp);
+		addUsuario.setBackColor(Color.GREEN);
+		addUsuario.setForeColor(Color.WHITE);
 		add(editar = new Button("EDITAR"), CENTER, SAME, PARENTSIZE + 30, 30, sp);
 		editar.setBackColor(Color.YELLOW);
 		editar.setForeColor(Color.WHITE);
@@ -87,31 +85,31 @@ public class ListaLocais extends Window {
 			if (event.target == grid) {
 				@SuppressWarnings(value = "unused")
 				Object element = grid.getSelectedItem();
-			} else if (event.type == ControlEvent.PRESSED && event.target == addLocal) {
-				AddLocal al = new AddLocal();
-				al.popup();
+			} else if (event.type == ControlEvent.PRESSED && event.target == addUsuario) {
+				AddUsuario au = new AddUsuario();
+				au.popup();
 			} else if (event.type == ControlEvent.PRESSED && event.target == editar) {
 				if (grid.getSelectedItem() == null) {
 					Toast.show("Selecione pelo menos um item para editar!", 2000);
-					ListaLocais ll;
+					ListaUsuarios ll;
 					try {
-						ll = new ListaLocais();
+						ll = new ListaUsuarios();
 						ll.popup();
 					} catch (SQLException e) {
 						MessageBox.showException(e, true);
 					}
 				} else {
 					String value[] = (String[]) grid.getSelectedItem();
-					EditarLocal ed = new EditarLocal(value[0]);
+					EditarUsuario ed = new EditarUsuario(value[0]);
 					ed.popup();
 				}
 			} else if (event.type == ControlEvent.PRESSED && event.target == excluir) {
 				if (grid.getSelectedItem() == null) {
 					Toast.show("Selecione pelo menos um local para excluir!", 2000);
-					ListaLocais ll;
+					ListaUsuarios lu;
 					try {
-						ll = new ListaLocais();
-						ll.popup();
+						lu = new ListaUsuarios();
+						lu.popup();
 					} catch (SQLException e) {
 						MessageBox.showException(e, true);
 					}
@@ -119,11 +117,11 @@ public class ListaLocais extends Window {
 					try {
 						String value[] = (String[]) grid.getSelectedItem();
 
-						localDAO = new LocalDAO();
-						localDAO.excluir(value[0]);
+						usuarioDAO = new UsuarioDAO();
+						usuarioDAO.excluir(value[0]);
 
-						Toast.show("Local excluído com sucesso!", 2000);
-						ListaLocais ll = new ListaLocais();
+						Toast.show("Usuario excluído com sucesso!", 2000);
+						ListaUsuarios ll = new ListaUsuarios();
 						ll.popup();
 					} catch (SQLException e) {
 						MessageBox.showException(e, true);
