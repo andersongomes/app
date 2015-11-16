@@ -32,19 +32,19 @@ public class TelaInicial extends Window {
 
 		add(addLocal = new Button("INSERIR LOCAL"), BEFORE, 100, PARENTSIZE + 40, 30, sp);
 		addLocal.setBackColor(Color.GREEN);
-		addLocal.setForeColor(Color.WHITE);
+		addLocal.setForeColor(Color.BLACK);
 
 		add(listar = new Button("LISTAR LOCAIS"), AFTER, 100, PARENTSIZE + 40, 30, sp);
 		listar.setBackColor(Color.GREEN);
-		listar.setForeColor(Color.WHITE);
+		listar.setForeColor(Color.BLACK);
 		
 		add(addUsuario = new Button("INSERIR USUÁRIO"), BEFORE, 150, PARENTSIZE + 40, 30, sp);
 		addUsuario.setBackColor(Color.GREEN);
-		addUsuario.setForeColor(Color.WHITE);
+		addUsuario.setForeColor(Color.BLACK);
 
 		add(listarUsuarios = new Button("LISTAR USUARIOS"), AFTER, 150, PARENTSIZE + 40, 30, sp);
 		listarUsuarios.setBackColor(Color.GREEN);
-		listarUsuarios.setForeColor(Color.WHITE);
+		listarUsuarios.setForeColor(Color.BLACK);
 
 	}
 

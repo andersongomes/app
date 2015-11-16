@@ -61,6 +61,7 @@ public class App extends MainWindow {
 		btClear.setBackColor(Color.WHITE);
 
 		btLogin.setBackColor(Color.GREEN);
+		btLogin.setForeColor(Color.BLACK);
 
 		baseDAO = new BaseDAO();
 

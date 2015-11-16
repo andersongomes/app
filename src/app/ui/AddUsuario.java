@@ -58,6 +58,7 @@ public class AddUsuario extends Window {
 
 		add(salvar = new Button("Salvar"), LEFT + 100, SAME, PREFERRED+100, 25, sp);
 		salvar.setBackColor(Color.GREEN);
+		salvar.setForeColor(Color.BLACK);
 
 		add(btClear = new Button("Limpar"), CENTER, SAME, PREFERRED+100, 25, sp);
 

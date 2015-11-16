@@ -77,10 +77,10 @@ public class ListaLocais extends Window {
 		
 		add(addLocal = new Button("ADICIONAR"), LEFT, SAME, PREFERRED+100, 25, sp);
 		addLocal.setBackColor(Color.GREEN);
-		addLocal.setForeColor(Color.WHITE);
+		addLocal.setForeColor(Color.BLACK);
 		add(editar = new Button("EDITAR"), CENTER, SAME, PREFERRED+100, 25, sp);
 		editar.setBackColor(Color.YELLOW);
-		editar.setForeColor(Color.WHITE);
+		editar.setForeColor(Color.BLACK);
 		add(excluir = new Button("EXCLUIR"), RIGHT, SAME, PREFERRED+100, 25, sp);
 		excluir.setBackColor(Color.RED);
 		excluir.setForeColor(Color.WHITE);

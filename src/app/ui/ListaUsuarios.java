@@ -75,10 +75,10 @@ public class ListaUsuarios extends Window {
 		
 		add(addUsuario = new Button("ADICIONAR"), LEFT, SAME, PREFERRED+100, 25, sp);
 		addUsuario.setBackColor(Color.GREEN);
-		addUsuario.setForeColor(Color.WHITE);
+		addUsuario.setForeColor(Color.BLACK);
 		add(editar = new Button("EDITAR"), CENTER, SAME, PREFERRED+100, 25, sp);
 		editar.setBackColor(Color.YELLOW);
-		editar.setForeColor(Color.WHITE);
+		editar.setForeColor(Color.BLACK);
 		add(excluir = new Button("EXCLUIR"), RIGHT, SAME, PREFERRED+100, 25, sp);
 		excluir.setBackColor(Color.RED);
 		excluir.setForeColor(Color.WHITE);
